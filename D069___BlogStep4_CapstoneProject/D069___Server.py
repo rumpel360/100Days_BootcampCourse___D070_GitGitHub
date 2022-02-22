@@ -132,7 +132,6 @@ db.create_all()
 @app.route('/')
 def get_all_posts():
     posts = BlogPost.query.all()
-    print(posts)
     return render_template("index.html", all_posts=posts)
 
 
@@ -143,7 +142,6 @@ def show_post(post_id):
     comment_form = CommentForm()
     requested_post = BlogPost.query.get(post_id)
     comments = Comment.query.filter_by(parent_post_id=post_id)
-    print(comments)
     if comment_form.validate_on_submit():
         if current_user.is_authenticated:
             new_comment = Comment(
@@ -151,18 +149,13 @@ def show_post(post_id):
                 parent_post = requested_post,
                 text=comment_form.body.data
             )
-            print(new_comment)
             db.session.add(new_comment)
             db.session.commit()
             return render_template("post.html", post=requested_post, comments=comments, form=comment_form)
-            # return '<p>dummy</p>'
         else:
             flash("Please login to enable commenting")
             return redirect(url_for('login'))
-    print(requested_post)
-    print(comments)
     return render_template("post.html", post=requested_post, comments=comments, form=comment_form)
-    # return '<p>dummy</p>'
 
 
 # ----------------------------------------------------------------------------------------
@@ -187,9 +180,7 @@ def register():
             )
             db.session.add(new_user)
             db.session.commit()
-            print(current_user.is_authenticated)
             login_user(new_user)
-            print(current_user.is_authenticated, current_user.email)
             return redirect(url_for('get_all_posts'))
     return render_template("register.html", form=registration_form)
 
@@ -197,7 +188,6 @@ def register():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     login_form = LoginForm()
-    print(current_user.is_authenticated)
     if login_form.validate_on_submit():
         login_email = login_form.email.data
         login_pw_plain = login_form.password.data
@@ -205,8 +195,6 @@ def login():
         if user:
             if check_password_hash(user.password, login_pw_plain):
                 login_user(user)
-                print(current_user.is_authenticated)
-                print(current_user.id)
                 return redirect(url_for('get_all_posts'))
             else:
                 flash('This password is not assigned to this email address...')
@@ -219,9 +207,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    print(current_user.is_authenticated)
     logout_user()
-    print(current_user.is_authenticated)
     return redirect(url_for('get_all_posts'))
 
 
