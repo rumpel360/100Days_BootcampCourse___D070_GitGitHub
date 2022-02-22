@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, redirect, url_for, flash, abort
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
@@ -39,7 +41,8 @@ gravatar = Gravatar(app,
 # ----------------------------------------------------------------------------------------
 # # CONNECT TO DB
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog_relations.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog_relations.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///blog_relations.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
