@@ -19,7 +19,8 @@ from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 # Setup Server:
 app = Flask(__name__)
 # app.config['SECRET_KEY'] = secrets.token_hex()
-app.config['SECRET_KEY'] = 'gvskjgon54.rtog-a6847snjft64rhs-gbdf'
+# app.config['SECRET_KEY'] = 'gvskjgon54.rtog-a6847snjft64rhs-gbdf'
+app.config['SECRET_KEY'] = os.environ.get('CSRF')
 ckeditor = CKEditor(app)
 
 
