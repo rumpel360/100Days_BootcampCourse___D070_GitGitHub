@@ -18,7 +18,8 @@ from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 # ----------------------------------------------------------------------------------------
 # Setup Server:
 app = Flask(__name__)
-app.config['SECRET_KEY'] = secrets.token_hex()
+# app.config['SECRET_KEY'] = secrets.token_hex()
+app.config['SECRET_KEY'] = 'gvskjgon54.rtog-a6847snjft64rhs-gbdf'
 ckeditor = CKEditor(app)
 
 
@@ -41,8 +42,8 @@ gravatar = Gravatar(app,
 # ----------------------------------------------------------------------------------------
 # # CONNECT TO DB
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog_relations.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///blog_relations.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog_relations.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///blog_relations.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
